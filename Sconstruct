@@ -1,0 +1,15 @@
+import os
+
+# Set up the environment
+env = Environment()
+
+# Add an extra include directory
+extra_include_dir = 'header'  # Change this to your actual include directory
+env.Append(CPPPATH=[extra_include_dir])
+
+# Compile the C++ source file
+source_file = 'main.cpp'  # Change this to your actual source file
+program = env.Program('my_program', source_file)
+
+# Default build target
+Default(program)
