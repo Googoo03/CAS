@@ -1,5 +1,9 @@
 #include <cassert>
 
+#pragma once
+
+#ifndef VECTOR_H
+#define VECTOR_H
 template<class T>
 class VECTOR{
 
@@ -8,6 +12,13 @@ class VECTOR{
         VECTOR(int _m){
             arr = new T[_m];
             m = _m;
+            n = 0;
+            Initialize();
+        }
+
+        VECTOR(){
+            arr = new T[1];
+            m = 1;
             n = 0;
             Initialize();
         }
@@ -31,6 +42,21 @@ class VECTOR{
             n++;
         }
 
+        
+
+        T pop(){
+            //std::cout << "pop called" << std::endl;
+            assert(n > -1);
+            T result = arr[0];
+            for(int i = 0; i < n; ++i){
+                arr[i] = arr[i+1];
+            }
+            n--;
+            return result;
+        }
+
+        bool Empty(){return n <= 0;}
+
         int Get_Length(){ return n;}
 
         T& operator[](int b){
@@ -38,7 +64,7 @@ class VECTOR{
             return arr[b];
         }
 
-        friend std::ostream& operator<<(std::ostream& os, VECTOR& obj){
+        friend std::ostream& operator<<(std::ostream& os, VECTOR<T>& obj){
             for(int i = 0; i < obj.Get_Length(); ++i){
                 os << "Element " << i << ": " << *obj[i] << std::endl;
             }
@@ -54,3 +80,5 @@ class VECTOR{
         //sets all indices to the 0 equivalent of T
         void Initialize(){ for(int i = 0; i < m; ++i) arr[i] = (T){}; }
 };
+
+#endif
