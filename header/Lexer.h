@@ -33,29 +33,29 @@ struct Token{
 
 class Lexer{
     public:
-        static VECTOR<Token*> Lexelize(VECTOR<std::string*> blocks){
-            VECTOR<Token*> token_list;
+        static VECTOR<Token> Lexelize(VECTOR<std::string*> blocks){
+            VECTOR<Token> token_list;
             
             while(!blocks.Empty()){
                 //Logic for identifying each token goes here
 
                 //There's likely a better way? Doesn't this still copy the entire substring?
                 std::string block = *blocks.pop();
-                if(block == "("){ token_list.Append(new Token(block,TokenType::_LParen)); continue; }
+                if(block == "("){ token_list.Append( Token(block,TokenType::_LParen)); continue; }
 
-                if(block == ")"){ token_list.Append(new Token(block,TokenType::_RParen)); continue; }
+                if(block == ")"){ token_list.Append( Token(block,TokenType::_RParen)); continue; }
 
-                if(block == "{"){ token_list.Append(new Token(block,TokenType::_LBracket)); continue; }
+                if(block == "{"){ token_list.Append( Token(block,TokenType::_LBracket)); continue; }
 
-                if(block == "}"){ token_list.Append(new Token(block,TokenType::_RBracket)); continue; }
+                if(block == "}"){ token_list.Append( Token(block,TokenType::_RBracket)); continue; }
 
-                if(block == "+" || block == "-"){ token_list.Append(new Token(block,TokenType::_ADDoperator)); continue; }
+                if(block == "+" || block == "-"){ token_list.Append( Token(block,TokenType::_ADDoperator)); continue; }
 
-                if(block == "*" || block == "/"){ token_list.Append(new Token(block,TokenType::_MULoperator)); continue; }
+                if(block == "*" || block == "/"){ token_list.Append( Token(block,TokenType::_MULoperator)); continue; }
 
-                if(block == "let"){ token_list.Append(new Token(block,TokenType::_keyword)); continue; }
+                if(block == "let"){ token_list.Append( Token(block,TokenType::_keyword)); continue; }
 
-                if(std::regex_match(block,std::regex("^[A-Za-z]+$"))){ token_list.Append(new Token(block,TokenType::_variable)); continue; }
+                if(std::regex_match(block,std::regex("^[A-Za-z]+$"))){ token_list.Append( Token(block,TokenType::_variable)); continue; }
                 //Append to token_list
             }
 

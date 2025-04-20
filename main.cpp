@@ -9,8 +9,10 @@ int main(int argc, char* argv[]){
     std::cout << result << std::endl;
 
     //Lexer
-    VECTOR<Token*> tokens = Lexer::Lexelize(result);
+    VECTOR<Token> tokens = Lexer::Lexelize(result);
     std::cout << tokens << std::endl;
     
+    VECTOR<int> test{1,2,3};
+    std::cout << "Contents of test: " << test << std::endl;
     return 0;
 }

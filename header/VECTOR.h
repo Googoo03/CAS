@@ -4,8 +4,31 @@
 
 #ifndef VECTOR_H
 #define VECTOR_H
+
+template<typename T>
+struct is_pointer { static const bool value = false; };
+
+template<typename T>
+struct is_pointer<T*> { static const bool value = true; };
+
+
 template<class T>
 class VECTOR{
+    private:
+
+        int m; //capacity of array
+        int n; //size of array
+        T* arr;
+
+        is_pointer<T> pointer;
+        //sets all indices to the 0 equivalent of T
+        void Initialize(){ for(int i = 0; i < m; ++i) arr[i] = (T){}; }
+
+        void Initialize(std::initializer_list<T> _il){ 
+            for(int i = 0; i < _il.size(); ++i){
+                arr[i] = *(_il.begin() + i); 
+            }
+        }
 
     public:
 
@@ -21,6 +44,13 @@ class VECTOR{
             m = 1;
             n = 0;
             Initialize();
+        }
+
+        VECTOR(std::initializer_list<T> _il){
+            arr = new T[_il.size()];
+            m = _il.size();
+            n = _il.size();
+            Initialize(_il);
         }
 
         void Resize(int _m){
@@ -57,6 +87,13 @@ class VECTOR{
 
         bool Empty(){return n <= 0;}
 
+        bool Contains(T val){
+            for(int i = 0; i < n; ++i){
+                if(arr[i] == val) return true;
+            }
+            return false;
+        }
+
         int Get_Length(){ return n;}
 
         T& operator[](int b){
@@ -65,20 +102,19 @@ class VECTOR{
         }
 
         friend std::ostream& operator<<(std::ostream& os, VECTOR<T>& obj){
-            for(int i = 0; i < obj.Get_Length(); ++i){
-                os << "Element " << i << ": " << *obj[i] << std::endl;
+
+            if constexpr(!is_pointer<T>::value){
+
+                for(int i = 0; i < obj.Get_Length(); ++i){
+                    os << obj[i] << " ";
+                }
+            }else {
+                for(int i = 0; i < obj.Get_Length(); ++i){
+                    os << *obj[i] << " ";
+                }
             }
             return os;
         }
-
-    private:
-
-        int m; //capacity of array
-        int n; //size of array
-        T* arr;
-
-        //sets all indices to the 0 equivalent of T
-        void Initialize(){ for(int i = 0; i < m; ++i) arr[i] = (T){}; }
 };
 
 #endif
