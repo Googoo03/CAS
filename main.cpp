@@ -1,6 +1,7 @@
 #include <iostream>
-#include <Tokenizer.h>
-#include <Lexer.h>
+#include "Tokenizer.h"
+#include "Lexer.h"
+#include "Syntax_Analysis.h"
 
 int main(int argc, char* argv[]){
 

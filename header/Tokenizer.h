@@ -1,5 +1,8 @@
 #include <VECTOR.h>
 
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
+
 class Tokenizer{
 
     //takes in string input, returns token array
@@ -27,3 +30,5 @@ class Tokenizer{
         }
 
 };
+
+#endif

@@ -2,8 +2,12 @@
 #include <string>
 #include <regex>
 
+#pragma once
+
+#ifndef LEXER_H
+#define LEXER_H
 //INCLUDE ALL TOKEN TYPES THAT WE NEED. LIKELY MATHEMATICAL UNITS LIKE VECTOR AND MATRIX
-enum TokenType{
+enum class TokenType{
     _keyword,
     _variable,
     _ADDoperator,
@@ -12,8 +16,12 @@ enum TokenType{
     _RParen,
     _LBracket,
     _RBracket
-
 };
+
+std::ostream& operator<<(std::ostream& os, TokenType& obj){
+    os << obj;
+    return os;
+}
 
 
 struct Token{
@@ -64,3 +72,5 @@ class Lexer{
     private:
 
 };
+
+#endif
