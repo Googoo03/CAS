@@ -8,6 +8,7 @@
 
 
 //So, enums need to be known at compile time. If we want this to be user-generated on the fly, then we can't use enums.
+//However, we want the values to be referenced by name?
 enum Terminals{
     _end_stack,
     _variable,
@@ -29,18 +30,26 @@ enum NonTerminals{
     NONTERM_NUM
 };
 
+enum Symbols{
+    _START,
+    _EPS,
+    _Expression,
+    _Expression_,
+    _Term,
+    _Term_,
+    Factor,
+    _end_stack,
+    _variable,
+    _ADDoperator,
+    _MULoperator,
+    _LParen,
+    _RParen,
+    SYMBOL_NUM
+};
+
 
 //we want the table to be a combination of terminals and non terminals.
 //each one can be represented by an int. How do we have a sequence of them tho?
-VECTOR<std::string> transitionTable[TERM_NUM][NONTERM_NUM] = {
-    { {}, {}, {}, 3}, //S
-    {4, 5, 6, 7}, //E
-    {0, 1, 2, 3}, //E'
-    {4, 5, 6, 7}, //T
-    {0, 1, 2, 3}, //T'
-    {4, 5, 6, 7} //F
-
-};
 
 
 class Syntax_Analyzer{
@@ -51,6 +60,16 @@ class Syntax_Analyzer{
         //Need a list of input terminals
         VECTOR<Token> input_tokens;
         //Need a transition table to reference
+        VECTOR<Symbols> transitionTable[TERM_NUM][NONTERM_NUM] = {
+            {{}, {}, {}, {Symbols::_Expression, Symbols::_START}, {}, {Symbols::_Expression, Symbols::_START}}, //S
+            {{}, {}, {}, {Symbols::_Term, Symbols::_Expression_}, {}, {Symbols::_Term, Symbols::_Expression_}}, //E
+            {{Symbols::_EPS}, {Symbols::_Term, Symbols::_Expression_}, {}, {}, {Symbols::_EPS}, {}}, //E'
+            {{}, {}, {}, {Symbols::Factor, Symbols::_Term_}, {}, {Symbols::Factor, Symbols::_Term_}}, //T
+            {{Symbols::_EPS}, {Symbols::_EPS}, {Symbols::_MULoperator, Symbols::Factor, Symbols::_Term_}, {}, {Symbols::_EPS}, {}}, //T'
+            {{}, {}, {}, {Symbols::_LParen, Symbols::_Expression, Symbols::_RParen}, {}, {Symbols::_variable}} //F
+        
+        };
+
 
         //Need a way to generate a null/first/follow table given a set of grammar rules. LATER
 
